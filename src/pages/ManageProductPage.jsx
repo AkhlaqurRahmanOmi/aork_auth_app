@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Container,
+  IconButton,
+} from "@mui/material";
+import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
 
 const ManageProductsPage = () => {
   const [products, setProducts] = useState([]);
@@ -48,20 +58,38 @@ const ManageProductsPage = () => {
   };
 
   return (
-    <div>
-      <h2>Manage Products</h2>
-      <ul>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Manage Products
+      </Typography>
+      <Grid container spacing={3}>
         {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - {product.title}
-            <Link to={`/update/${product.id}`}>Edit</Link>
-            <button onClick={() => handleDeleteProduct(product.id)}>
-              Delete
-            </button>
-          </li>
+          <Grid item xs={12} sm={6} md={4} key={product.id}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" component="div">
+                  {product.name}
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                  {product.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {product.description}
+                </Typography>
+                <div style={{ marginTop: "1rem" }}>
+                  <IconButton component={Link} to={`/update/${product.id}`}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => handleDeleteProduct(product.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
         ))}
-      </ul>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 
